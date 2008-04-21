@@ -3,6 +3,7 @@ Changes for Perl extension Portable
 0.03 Tue 22 Apr 2008
 	- Moving the name from Perl::Portable to Portable
 	- Adding proper support for Portable'ing CPAN::Config
+	- Removing dependency bloat, use only 5.10.1 core modules
 
 0.02 Mon 21 Apr 2008
 	- Completely changed the portable.perl format to be based on

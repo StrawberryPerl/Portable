@@ -21,10 +21,10 @@ config:
   installbin: perl/bin
   installhtml1dir: ''
   installhtml3dir: ''
-  installhtmldir: perl/html
-  installhtmlhelpdir: perl/htmlhelp
-  installman1dir: perl/man/man1
-  installman3dir: perl/man/man3
+  installhtmldir: ''
+  installhtmlhelpdir: ''
+  installman1dir: ''
+  installman3dir: ''
   installprefix: perl
   installprefixexp: perl
   installprivlib: perl/lib
@@ -37,7 +37,7 @@ config:
   installsiteman1dir: ''
   installsiteman3dir: ''
   installsitescript: ''
-  installstyle: lib
+  installstyle: perl/lib
   installusrbinperl: ~
   installvendorarch: ''
   installvendorbin: ''
@@ -56,10 +56,10 @@ config:
   scriptdir: perl/bin
   sitearchexp: perl/site/lib
   sitelibexp: perl/site/lib
-  man1dir: perl/man/man1
-  man1direxp: perl/man/man1
-  man3dir: perl/man/man3
-  man3direxp: perl/man/man3
+  man1dir: ''
+  man1direxp: ''
+  man3dir: ''
+  man3direxp: ''
 ENV:
   PATH:
     - c/bin

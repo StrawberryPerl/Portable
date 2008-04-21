@@ -6,7 +6,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 1;
+use Test::More tests => 24;
 use File::Spec ();
 use Portable   ();
 
@@ -20,3 +20,14 @@ $Portable::FAKE_PERL = File::Spec->rel2abs(
 # Create an object
 my $perl = Portable->_default;
 isa_ok( $perl, 'Portable' );
+
+# Do all the config entries exist
+my $config = $perl->config;
+foreach my $k ( sort keys %$config ) {
+	next if $k =~ /^ld/;
+	next unless defined $config->{$k};
+	next unless length $config->{$k};
+	ok( -e $config->{$k}, "$config->{$k} exists" );
+}
+
+ok( -e $perl->cpan->{cpan_home}, 'cpan_home exists' );

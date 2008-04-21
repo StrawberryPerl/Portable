@@ -4,11 +4,18 @@ package Portable;
 
 =head1 NAME
 
-Portable - Perl on a Stick
+Portable - Perl on a Stick (EXPERIMENTAL)
 
 =head1 SYNOPSIS
 
-  perl -MPortable script.pl
+Launch a script portably
+
+  F:\anywhere\perl.exe -MPortable script.pl
+
+Have a script specifically request to run portably
+
+  #!/usr/bin/perl
+  use Portable;
 
 =head1 DESCRIPTION
 
@@ -32,23 +39,26 @@ reliable filesystem path (because the portable storage medium can be
 mounted at an arbitrary volume or filesystem location).
 
 B<Portable> provides a methodology and implementation to support
-the creating of  "Portable Perl" distributions. While this will initially
-be focused on a Windows implementation, wherever possible the module will
-be built to be platform-agnostic.
+the creating of "Portable Perl" applications and distributions.
 
-For now, see the code for more...
+While this will initially be focused on a Windows implementation,
+wherever possible the module will be built to be platform-agnostic
+in the hope that future versions can support other operating systems,
+or work across multiple operating systems.
+
+This module is not ready for public use. For now, see the code for
+more details on how it works...
 
 =cut
 
 use 5.010;
 use strict;
-use feature          'state';
-use Config           ();
-use Carp             ();
-use File::Spec       ();
-use List::Util       ();
-use YAML::Tiny       ();
-use Params::Util     qw{ _STRING _HASH _ARRAY };
+use feature           'state';
+use Config            ();
+use Carp              ();
+use File::Spec        ();
+use List::Util        ();
+use Parse::CPAN::Meta ();
 
 our $VERSION = '0.03';
 
@@ -76,6 +86,26 @@ our %cpan_file = ( %cpan_post, enum qw{ histfile } );
 
 
 
+
+#####################################################################
+# Param-Checking Assertions, cloned from Params::Util
+
+sub _STRING ($) {
+	(defined $_[0] and ! ref $_[0] and length($_[0])) ? $_[0] : undef;
+}
+
+sub _HASH ($) {
+	(ref $_[0] eq 'HASH' and scalar %{$_[0]}) ? $_[0] : undef;
+}
+
+sub _ARRAY ($) {
+	(ref $_[0] eq 'ARRAY' and @{$_[0]}) ? $_[0] : undef;
+}
+
+
+
+
+
 #####################################################################
 # Constructors
 
@@ -96,27 +126,21 @@ sub new {
 	unless ( _HASH($self->{portable}) ) {
 		Carp::croak('Missing or invalid portable param');
 	}
-	unless ( _HASH($self->{portable}->{ENV}) ) {
-		Carp::croak('Missing or invalid ENV key in portable.perl');
-	}
-	unless ( _ARRAY($self->{portable}->{ENV}->{PATH}) ) {
-		Carp::croak('Missing or invalid ENV.PATH key in portable.perl');
-	}
-	unless ( _ARRAY($self->{portable}->{ENV}->{LIB}) ) {
-		Carp::croak('Missing or invalid ENV.LIB key in portable.perl');
-	}
-	unless ( _ARRAY($self->{portable}->{ENV}->{INCLUDE}) ) {
-		Carp::croak('Missing or invalid ENV.INCLUDE key in portable.perl');
+	unless ( _HASH($self->{portable}->{cpan}) ) {
+		Carp::croak('Missing or invalid cpan key in portable.perl');
 	}
 	unless ( _HASH($self->{portable}->{config}) ) {
 		Carp::croak('Missing or invalid config key in portable.perl');
+	}
+	unless ( _HASH($self->{portable}->{ENV}) ) {
+		Carp::croak('Missing or invalid ENV key in portable.perl');
 	}
 
 	# Localize Config.pm entries
 	SCOPE: {
 		eval { require 'Config_heavy.pl'; };
 		my $config  = $self->{config} = {};
-		my $pconfig = $self->{portable}->{config};
+		my $pconfig = $self->portable_config;
 		foreach my $key ( sort keys %$pconfig ) {
 			unless (
 				defined $pconfig->{$key}
@@ -149,7 +173,7 @@ sub new {
 	SCOPE: {
 		require CPAN::Config;
 		my $cpan  = $self->{cpan} = {};
-		my $pcpan = $self->{portable}->{cpan};
+		my $pcpan = $self->portable_cpan;
 		foreach my $key ( sort keys %$pcpan ) {
 			unless (
 				defined $pcpan->{$key}
@@ -210,7 +234,7 @@ sub _default {
 	my $conf      = File::Spec->catpath($dist_volume, $dist_dirs, portable_conf );
 
 	# Load the YAML file
-	my $portable = YAML::Tiny::LoadFile( $conf );
+	my $portable = Parse::CPAN::Meta::LoadFile( $conf );
 	unless ( _HASH($portable) ) {
 		Carp::croak("Missing or invalid portable.perl file");
 	}
@@ -302,17 +326,26 @@ sub portable_env {
 	$_[0]->{portable}->{ENV};
 }
 
-sub portable_env_path {
-	@{ $_[0]->{portable}->{ENV}->{PATH} };
+sub cpan {
+	$_[0]->{cpan};
 }
 
-sub portable_env_lib {
-	@{ $_[0]->{portable}->{ENV}->{LIB} };
+sub config {
+	$_[0]->{config};
 }
 
-sub portable_env_include {
-	@{ $_[0]->{portable}->{ENV}->{INCLUDE} };
+sub env {
+	$_[0]->{ENV};
 }
+
+
+
+
+
+#####################################################################
+# Params::Util clones
+
+
 1;
 
 =pod
@@ -321,7 +354,7 @@ sub portable_env_include {
 
 Bugs should be reported via the CPAN bug tracker.
 
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Perl-Portable>
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Portable>
 
 For other issues, or commercial support, contact the author.
 
