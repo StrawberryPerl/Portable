@@ -51,9 +51,9 @@ more details on how it works...
 
 =cut
 
-use 5.010;
+use 5.008;
 use strict;
-use feature           'state';
+# use feature           'state';
 use Config            ();
 use Carp              ();
 use File::Spec        ();
@@ -205,8 +205,9 @@ sub new {
 	return $self;
 }
 
+my $cache;
 sub _default {
-	state $cache;
+	# state $cache;
 	return $cache if $cache;
 
 	# Get the perl executable location
@@ -276,8 +277,9 @@ sub apply {
 	return 1;
 }
 
+my $applied;
 sub import {
-	state $applied;
+	# state $applied;
 	unless ( $applied ) {
 		$_[0]->apply;
 		$applied = 1;

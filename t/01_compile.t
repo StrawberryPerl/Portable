@@ -8,6 +8,6 @@ BEGIN {
 
 use Test::More tests => 2;
 
-ok( $] >= 5.010, 'Perl version is new enough' );
+ok( $] >= 5.008, 'Perl version is new enough' );
 
 require_ok( 'Portable' );
