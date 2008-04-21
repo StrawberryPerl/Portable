@@ -1,0 +1,12 @@
+Changes for Perl extension Portable
+
+0.03 Tue 22 Apr 2008
+	- Moving the name from Perl::Portable to Portable
+	- Adding proper support for Portable'ing CPAN::Config
+
+0.02 Mon 21 Apr 2008
+	- Completely changed the portable.perl format to be based on
+	  Config.pm instead of some arbitrary format I invented myself.
+
+0.01 Fri 18 Apr 2008
+	- Experimental first release
