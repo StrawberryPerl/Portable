@@ -60,8 +60,8 @@ Config:
   scriptdirexp: perl/bin
   sitearch: perl/site/lib
   sitearchexp: perl/site/lib
-  sitebin: perl/site/bin
-  sitebinexp: perl/site/bin
+  sitebin: perl/bin
+  sitebinexp: perl/bin
   sitelib: perl/site/lib
   sitelibexp: perl/site/lib
   siteprefix: perl/site
