@@ -6,8 +6,10 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 2;
+use Test::More tests => 4;
 
 ok( $] >= 5.008, 'Perl version is new enough' );
 
-require_ok( 'Portable' );
+require_ok( 'Portable'         );
+require_ok( 'Portable::Config' );
+require_ok( 'Portable::CPAN'   );

@@ -1,16 +1,16 @@
 ---
-class: Portable
-cpan:
+CPAN:
   build_dir: cpan/build
   cpan_home: cpan
   histfile: cpan/histfile
   keep_source_where: cpan/sources
   make: c/bin/dmake.exe
   makepl_arg: 'LIBS=-L$libpth INC=-I$incpath'
+  patch: c/bin/patch.exe
   prefs_dir: cpan/prefs
-minicpan:
+MiniCPAN:
   local: minicpan
-config:
+Config:
   archlib: perl/lib
   archlibexp: perl/lib
   bin: perl/bin
@@ -49,18 +49,28 @@ config:
   installvendorscript: ''
   lddlflags: '-mdll -s -L"$archlib\CORE" -L"$libpth"'
   ldflags: '-s -L"$archlib\CORE" -L"$libpth"'
+  ldflags_nolargefiles: '-s -L"$archlib\CORE" -L"$libpth"'
   libpth: c/lib
   perlpath: perl/bin/perl.exe
   prefix: perl
+  prefixexp: perl
+  privlib: perl/lib
   privlibexp: perl/lib
   scriptdir: perl/bin
+  scriptdirexp: perl/bin
+  sitearch: perl/site/lib
   sitearchexp: perl/site/lib
+  sitebin: perl/site/bin
+  sitebinexp: perl/site/bin
+  sitelib: perl/site/lib
   sitelibexp: perl/site/lib
+  siteprefix: perl/site
+  siteprefixexp: perl/site
   man1dir: ''
   man1direxp: ''
   man3dir: ''
   man3direxp: ''
-ENV:
+Env:
   PATH:
     - c/bin
     - perl/bin

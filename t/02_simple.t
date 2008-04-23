@@ -6,7 +6,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 24;
+use Test::More tests => 33;
 use File::Spec ();
 use Portable   ();
 

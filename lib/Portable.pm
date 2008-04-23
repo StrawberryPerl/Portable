@@ -54,50 +54,24 @@ more details on how it works...
 use 5.008;
 use strict;
 # use feature           'state';
-use Config            ();
 use Carp              ();
 use File::Spec        ();
 use List::Util        ();
 use Parse::CPAN::Meta ();
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 # This variable is provided exclusively for the
 # use of test scripts.
 our $FAKE_PERL = undef;
 
-use constant portable_conf => 'portable.perl';
-
-# Create the enumerations
-sub enum (@) { map { $_ => 1 } @_ }
-our %conf_file = enum qw{ perlpath };
-our %conf_post = enum qw{ ldflags lddlflags };
-our %cpan_bin  = enum qw{
-	bzip2 curl ftp gpg gzip lynx
-	ncftp ncftpget pager patch
-	shell tar unzip wget
-};
-our %cpan_post = enum qw{
-	make_arg make_install_arg makepl_arg
-	mbuild_arg mbuild_install_arg mbuildpl_arg
-};
-our %cpan_file = ( %cpan_post, enum qw{ histfile } );
-
-
-
-
-
-#####################################################################
-# Param-Checking Assertions, cloned from Params::Util
-
+# Param-checking
 sub _STRING ($) {
 	(defined $_[0] and ! ref $_[0] and length($_[0])) ? $_[0] : undef;
 }
-
 sub _HASH ($) {
 	(ref $_[0] eq 'HASH' and scalar %{$_[0]}) ? $_[0] : undef;
 }
-
 sub _ARRAY ($) {
 	(ref $_[0] eq 'ARRAY' and @{$_[0]}) ? $_[0] : undef;
 }
@@ -126,80 +100,19 @@ sub new {
 	unless ( _HASH($self->{portable}) ) {
 		Carp::croak('Missing or invalid portable param');
 	}
-	unless ( _HASH($self->{portable}->{cpan}) ) {
-		Carp::croak('Missing or invalid cpan key in portable.perl');
-	}
-	unless ( _HASH($self->{portable}->{config}) ) {
-		Carp::croak('Missing or invalid config key in portable.perl');
-	}
-	unless ( _HASH($self->{portable}->{ENV}) ) {
-		Carp::croak('Missing or invalid ENV key in portable.perl');
-	}
 
-	# Localize Config.pm entries
-	SCOPE: {
-		eval { require 'Config_heavy.pl'; };
-		my $config  = $self->{config} = {};
-		my $pconfig = $self->portable_config;
-		foreach my $key ( sort keys %$pconfig ) {
-			unless (
-				defined $pconfig->{$key}
-				and
-				length $pconfig->{$key}
-				and
-				! $conf_post{$key}
-			) {
-				$config->{$key} = $pconfig->{$key};
-				next;
-			}
-			my @parts = split /\//, $pconfig->{$key};
-			if ( $conf_file{$key} ) {
-				$config->{$key} = File::Spec->catfile(
-					$self->dist_root, @parts,
-				);
-			} else {
-				$config->{$key} = File::Spec->catdir(
-					$self->dist_root, @parts,
-				);
-			}
-		}
-		foreach my $key ( sort keys %conf_post ) {
-			next unless defined $config->{$key};
-			$config->{$key} =~ s/\$(\w+)/$config->{$1}/g;
-		}
-	}
+	# Compulsory support for Config.pm
+	require Config;
+	require Portable::Config;
+	$self->{Config} = Portable::Config->new( $self );
 
-	# Localize CPAN/Config.pm entries
-	SCOPE: {
+	# Optional support for CPAN/Config.pm
+	eval {
 		require CPAN::Config;
-		my $cpan  = $self->{cpan} = {};
-		my $pcpan = $self->portable_cpan;
-		foreach my $key ( sort keys %$pcpan ) {
-			unless (
-				defined $pcpan->{$key}
-				and
-				length $pcpan->{$key}
-				and not
-				$cpan_post{$key}
-			) {
-				$cpan->{$key} = $pcpan->{$key};
-				next;
-			}
-			my @parts = split /\//, $pcpan->{$key};
-			if ( $cpan_file{$key} ) {
-				$cpan->{$key} = File::Spec->catfile(
-					$self->dist_root, @parts,
-				);
-			} else {
-				$cpan->{$key} = File::Spec->catdir(
-					$self->dist_root, @parts,
-				);
-			}
-		}
-		foreach my $key ( sort keys %cpan_post ) {
-			next unless defined $cpan->{$key};
-			$cpan->{$key} =~ s/\$(\w+)/$self->{config}->{$1}/g;
-		}
+	};
+	if ( $self->portable_cpan and not $@ ) {
+		require Portable::CPAN;
+		$self->{CPAN} = Portable::CPAN->new( $self );
 	}
 
 	return $self;
@@ -221,7 +134,7 @@ sub _default {
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
 	my $dist_dirs = List::Util::first {
-			-f File::Spec->catpath( $dist_volume, $_, portable_conf )
+			-f File::Spec->catpath( $dist_volume, $_, 'portable.perl' )
 		}
 		map {
 			File::Spec->catdir(@d[0 .. $_])
@@ -232,7 +145,7 @@ sub _default {
 
 	# Derive the main paths from the plain dirs
 	my $dist_root = File::Spec->catpath($dist_volume, $dist_dirs, '' );
-	my $conf      = File::Spec->catpath($dist_volume, $dist_dirs, portable_conf );
+	my $conf      = File::Spec->catpath($dist_volume, $dist_dirs, 'portable.perl' );
 
 	# Load the YAML file
 	my $portable = Parse::CPAN::Meta::LoadFile( $conf );
@@ -259,24 +172,6 @@ sub _default {
 #####################################################################
 # Main Interface
 
-sub apply {
-	my $default = _default();
-
-	# Apply the Perl configuration changes
-	my $config = $default->{config};
-	foreach my $k ( %$config ) {
-		$Config::Config{$k} = $config->{$k};
-	}
-
-	# Apply the CPAN configuration changes
-	my $cpan = $default->{cpan};
-	foreach my $k ( %$cpan ) {
-		$CPAN::Config->{$k} = $cpan->{$k};
-	}
-
-	return 1;
-}
-
 my $applied;
 sub import {
 	# state $applied;
@@ -287,7 +182,25 @@ sub import {
 	return $applied;
 }
 
+sub apply {
+	my $default = _default();
+	$default->applyconfig;
+	$default->applycpan;
+	return 1;
+}
 
+my $appliedconfig;
+sub applyconfig {
+	$_[0]->config->apply($_[0]);
+	$appliedconfig = 1;
+}
+
+my $appliedcpan;
+sub applycpan {
+	$_[0]->cpan or return;
+	$_[0]->cpan->apply($_[0]);
+	$appliedcpan = 1;
+}
 
 
 
@@ -317,36 +230,28 @@ sub perlpath {
 }
 
 sub portable_cpan {
-	$_[0]->{portable}->{cpan};
+	$_[0]->{portable}->{CPAN};
 }
 
 sub portable_config {
-	$_[0]->{portable}->{config};
+	$_[0]->{portable}->{Config};
 }
 
 sub portable_env {
-	$_[0]->{portable}->{ENV};
-}
-
-sub cpan {
-	$_[0]->{cpan};
+	$_[0]->{portable}->{Env};
 }
 
 sub config {
-	$_[0]->{config};
+	$_[0]->{Config};
+}
+
+sub cpan {
+	$_[0]->{CPAN};
 }
 
 sub env {
-	$_[0]->{ENV};
+	$_[0]->{Env};
 }
-
-
-
-
-
-#####################################################################
-# Params::Util clones
-
 
 1;
 
