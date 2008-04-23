@@ -1,5 +1,9 @@
 Changes for Perl extension Portable
 
+0.04 Wed 23 Apr 2008
+	- Separating out each task into a separate class
+	- Making the overwriting of CPAN::Config optional, because it doesn't always exist
+
 0.03 Tue 22 Apr 2008
 	- Moving the name from Perl::Portable to Portable
 	- Adding proper support for Portable'ing CPAN::Config
