@@ -53,17 +53,18 @@ more details on how it works...
 
 use 5.008;
 use strict;
+use warnings;
 # use feature           'state';
 use Carp              ();
 use File::Spec        ();
 use List::Util        ();
 use Parse::CPAN::Meta ();
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 # This variable is provided exclusively for the
 # use of test scripts.
-our $FAKE_PERL = undef;
+our $FAKE_PERL;
 
 # Param-checking
 sub _STRING ($) {
@@ -74,6 +75,42 @@ sub _HASH ($) {
 }
 sub _ARRAY ($) {
 	(ref $_[0] eq 'ARRAY' and @{$_[0]}) ? $_[0] : undef;
+}
+
+# Package variables
+my %applied;
+my $cache;
+
+
+
+
+
+#####################################################################
+# Pragma/Import Interface
+
+sub import {
+	my $class   = shift;
+	$class->apply( @_ ? @_ : qw{ Config CPAN } );
+}
+
+sub apply {
+	# default %applied;
+	my $class   = shift;
+	my $self    = _default();
+	my %apply   = map { $_ => 1 } @_;
+	if ( $apply{Config} and ! $applied{Config} ) {
+		$self->config->apply($self);
+		$applied{Config} = 1;	
+	}
+	if ( $apply{CPAN} and ! $applied{CPAN} and $self->cpan ) {
+		$self->cpan->apply($self);
+		$applied{CPAN} = 1;
+	}
+	return 1;
+}
+
+sub applied {
+	$applied{$_[1]};
 }
 
 
@@ -102,15 +139,11 @@ sub new {
 	}
 
 	# Compulsory support for Config.pm
-	require Config;
 	require Portable::Config;
 	$self->{Config} = Portable::Config->new( $self );
 
 	# Optional support for CPAN/Config.pm
-	eval {
-		require CPAN::Config;
-	};
-	if ( $self->portable_cpan and not $@ ) {
+	if ( $self->portable_cpan ) {
 		require Portable::CPAN;
 		$self->{CPAN} = Portable::CPAN->new( $self );
 	}
@@ -118,7 +151,6 @@ sub new {
 	return $self;
 }
 
-my $cache;
 sub _default {
 	# state $cache;
 	return $cache if $cache;
@@ -163,43 +195,6 @@ sub _default {
 		perlpath    => $perlpath,
 		portable    => $portable,
 	);
-}
-
-
-
-
-
-#####################################################################
-# Main Interface
-
-my $applied;
-sub import {
-	# state $applied;
-	unless ( $applied ) {
-		$_[0]->apply;
-		$applied = 1;
-	}
-	return $applied;
-}
-
-sub apply {
-	my $default = _default();
-	$default->applyconfig;
-	$default->applycpan;
-	return 1;
-}
-
-my $appliedconfig;
-sub applyconfig {
-	$_[0]->config->apply($_[0]);
-	$appliedconfig = 1;
-}
-
-my $appliedcpan;
-sub applycpan {
-	$_[0]->cpan or return;
-	$_[0]->cpan->apply($_[0]);
-	$appliedcpan = 1;
 }
 
 

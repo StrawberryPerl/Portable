@@ -6,16 +6,20 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 33;
+use Test::More tests => 36;
 use File::Spec ();
-use Portable   ();
 
 # Override the perl path for testing purposes
+$Portable::FAKE_PERL =
 $Portable::FAKE_PERL = File::Spec->rel2abs(
 	File::Spec->catfile( qw{
 		t data perl bin perl.exe
 	} )
 );
+
+require_ok( 'Portable' );
+ok( $Portable::FAKE_PERL, 'FAKE_PERL remains defined' );
+ok( ! $INC{'CPAN/Config.pm'}, 'CPAN::Config is not loaded' );
 
 # Create an object
 my $perl = Portable->_default;

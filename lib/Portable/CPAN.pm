@@ -2,9 +2,10 @@ package Portable::CPAN;
 
 use 5.008;
 use strict;
+use warnings;
 use Carp ();
 
-our $VERSION   = '0.04';
+our $VERSION = '0.05';
 
 # Create the enumerations
 our %bin  = map { $_ => 1 } qw{
@@ -54,13 +55,38 @@ sub new {
 			$root, split /\//, $cpan->{$key}
 		);
 	}
-	my $config = $parent->portable_config;
+	my $config = $parent->config;
 	foreach my $key ( sort keys %post ) {
 		next unless defined $self->{$key};
 		$self->{$key} =~ s/\$(\w+)/$config->{$1}/g;
 	}
 
 	return $self;
+}
+
+sub apply {
+	my $self   = shift;
+	my $parent = shift;
+
+	# Load the CPAN configuration
+	require CPAN::Config;
+
+	# Overwrite the CPAN config entries
+	foreach my $key ( sort keys %$self ) {
+		$CPAN::Config->{$key} = $self->{$key};
+	}
+
+	# Confirm we got all the paths
+	my $volume = quotemeta $parent->dist_volume;
+	foreach my $key ( sort keys %$CPAN::Config ) {
+		next unless defined $CPAN::Config->{$key};
+		next if     $CPAN::Config->{$key} =~ /$volume/;
+		next unless $CPAN::Config->{$key} =~ /\b[a-z]\:/i;
+		next if -e  $CPAN::Config->{$key};
+		die "Failed to localize \$CPAN::Config->{$key} ($CPAN::Config->{$key})";
+	}
+
+	return 1;
 }
 
 1;

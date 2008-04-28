@@ -2,10 +2,11 @@ package Portable::Config;
 
 use 5.008;
 use strict;
+use warnings;
 use Carp       ();
 use File::Spec ();
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 
 
@@ -60,18 +61,24 @@ sub apply {
 	my $preload = { %Config::Config };
 
 	# Shift the tie STORE method out the way
-	*Config::_TEMP = *Config::STORE;
-	*Config::STORE = sub {
-		$_[0]->{$_[1]} = $_[2];
-	};
+	SCOPE: {
+		no warnings;
+		*Config::_TEMP = *Config::STORE;
+		*Config::STORE = sub {
+			$_[0]->{$_[1]} = $_[2];
+		};
+	}
 
 	# Write the values to the Config hash
-	foreach my $key ( %$self ) {
+	foreach my $key ( sort keys %$self ) {
 		$Config::Config{$key} = $self->{$key};
 	}
 
 	# Restore the STORE method
-	*Config::STORE = delete $Config::{_TEMP};
+	SCOPE: {
+		no warnings;
+		*Config::STORE = delete $Config::{_TEMP};
+	}
 	
 	# Confirm we got all the paths
 	my $volume = quotemeta $parent->dist_volume;
