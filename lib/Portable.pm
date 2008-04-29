@@ -60,7 +60,7 @@ use File::Spec        ();
 use List::Util        ();
 use Parse::CPAN::Meta ();
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 # This variable is provided exclusively for the
 # use of test scripts.
@@ -96,7 +96,7 @@ sub import {
 sub apply {
 	# default %applied;
 	my $class   = shift;
-	my $self    = _default();
+	my $self    = $class->default;
 	my %apply   = map { $_ => 1 } @_;
 	if ( $apply{Config} and ! $applied{Config} ) {
 		$self->config->apply($self);
@@ -151,7 +151,7 @@ sub new {
 	return $self;
 }
 
-sub _default {
+sub default {
 	# state $cache;
 	return $cache if $cache;
 
