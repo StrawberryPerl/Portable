@@ -63,7 +63,7 @@ sub apply {
 	$self->{platform} = $File::HomeDir::ISA[0];
 
 	# Hijack the implementation class to us
-	$File::HomeDir::IMPLEMENTED_BY = Scalar::Util::blessed($self);
+	$File::HomeDir::IMPLEMENTED_BY = __PACKAGE_;
 
 	return 1;
 }
@@ -84,31 +84,7 @@ sub _SELF {
 }
 
 sub my_home {
-	_SELF(shift)->{my_home};
-}
-
-sub my_desktop {
-	shift->my_home;
-}
-
-sub my_documents {
-	shift->my_home;
-}
-
-sub my_data {
-	shift->my_home;
-}
-
-sub my_music {
-	shift->my_home;
-}
-
-sub my_pictures {
-	shift->my_home;
-}
-
-sub my_videos {
-	shift->my_home;
+	_SELF(@_)->{my_home};
 }
 
 1;

@@ -1,15 +1,4 @@
 ---
-CPAN:
-  build_dir: cpan/build
-  cpan_home: cpan
-  histfile: cpan/histfile
-  keep_source_where: cpan/sources
-  make: c/bin/dmake.exe
-  makepl_arg: 'LIBS=-L$libpth INC=-I$incpath'
-  patch: c/bin/patch.exe
-  prefs_dir: cpan/prefs
-MiniCPAN:
-  local: minicpan
 Config:
   archlib: perl/lib
   archlibexp: perl/lib
@@ -70,6 +59,15 @@ Config:
   man1direxp: ''
   man3dir: ''
   man3direxp: ''
+CPAN:
+  build_dir: cpan/build
+  cpan_home: cpan
+  histfile: cpan/histfile
+  keep_source_where: cpan/sources
+  make: c/bin/dmake.exe
+  makepl_arg: 'LIBS=-L$libpth INC=-I$incpath'
+  patch: c/bin/patch.exe
+  prefs_dir: cpan/prefs
 Env:
   PATH:
     - c/bin
@@ -80,3 +78,8 @@ Env:
   INCLUDE:
     - c/include
     - perl/lib/CORE
+  FTP_PASSIVE: 1
+minicpan:
+  local: /minicpan
+  remote: http://cpan.strawberryperl.com/
+  skip_perl: 1
