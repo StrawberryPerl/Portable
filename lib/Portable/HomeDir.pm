@@ -42,7 +42,6 @@ sub new {
 			$root, split /\//, $homedir->{$key}
 		);
 	}
-	my $homedir = $parent->homedir;
 
 	return $self;
 }
@@ -63,7 +62,7 @@ sub apply {
 	$self->{platform} = $File::HomeDir::ISA[0];
 
 	# Hijack the implementation class to us
-	$File::HomeDir::IMPLEMENTED_BY = __PACKAGE_;
+	$File::HomeDir::IMPLEMENTED_BY = __PACKAGE__;
 
 	return 1;
 }

@@ -79,6 +79,7 @@ Env:
     - c/include
     - perl/lib/CORE
   FTP_PASSIVE: 1
+  TERM: dumb
 minicpan:
   local: /minicpan
   remote: http://cpan.strawberryperl.com/

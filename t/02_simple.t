@@ -22,7 +22,7 @@ ok( $Portable::FAKE_PERL, 'FAKE_PERL remains defined' );
 ok( ! $INC{'CPAN/Config.pm'}, 'CPAN::Config is not loaded' );
 
 # Create an object
-my $perl = Portable->_default;
+my $perl = Portable->default;
 isa_ok( $perl, 'Portable' );
 
 # Do all the config entries exist
