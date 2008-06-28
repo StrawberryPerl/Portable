@@ -1,5 +1,10 @@
 Changes for Perl extension Portable
 
+0.06 Sat 28 Jun 2008
+	- Satisfactorily completed the Config.pm hook
+	- Satisfactorily completed the File::HomeDir hook
+	- Some test tweaks to make them actually work
+
 0.05 Sun 27 Apr 2008
 	- Don't preload the configurations.
 	  (Delay until the final ->apply is called)

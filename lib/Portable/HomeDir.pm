@@ -1,10 +1,13 @@
 package Portable::HomeDir;
 
+# In the trivial case, only my_home is implemented
+
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
-use Scalar::Util ();
+use Carp                  ();
+use Scalar::Util          ();
+use File::HomeDir::Driver ();
 
 our $VERSION = '0.06';
 our @ISA     = ();
@@ -47,19 +50,19 @@ sub new {
 }
 
 sub apply {
-	my $self   = shift;
+	my $self = shift;
 
-	# This won't work if File::HomeDir is already loaded
-	if ( $File::HomeDir::VERSION ) {
-		croak("File::HomeDir is already loaded");
+	# Shortcut if we've already applied
+	if ( $File::HomeDir::IMPLEMENTED_BY eq __PACKAGE__ ) {
+		return 1;
 	}
 
 	# Load File::HomeDir and the regular platform driver
-	use File::HomeDir;
+	require File::HomeDir;
 
 	# Remember the platform we're on so we can default
 	# to it properly if there's no portable equivalent.
-	$self->{platform} = $File::HomeDir::ISA[0];
+	$self->{platform} = $File::HomeDir::IMPLEMENTED_BY;
 
 	# Hijack the implementation class to us
 	$File::HomeDir::IMPLEMENTED_BY = __PACKAGE__;
