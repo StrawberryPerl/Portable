@@ -7,19 +7,24 @@ BEGIN {
 }
 
 use Test::More tests => 1;
-use Test::Exception;
-use File::Spec ();
+use File::Spec::Functions ':ALL';
+use Class::Inspector ();
 
 # Override the perl path for testing purposes
 $Portable::FAKE_PERL = 
-$Portable::FAKE_PERL = File::Spec->rel2abs(
-	File::Spec->catfile( qw{
+$Portable::FAKE_PERL = rel2abs(
+	catfile( qw{
 		t data perl bin perl.exe
 	} )
 );
 
-eval {
-	require Portable;
-	Portable->import('CPAN');
-};
-ok( ! $@, '->import(CPAN) ok' );
+SKIP: {
+	unless ( Class::Inspector->installed('CPAN::Config') ) {
+		skip( "CPAN::Config not found", 1 );
+	}
+	eval {
+		require Portable;
+		Portable->import('CPAN');
+	};
+	ok( ! $@, '->import(CPAN) ok' );
+}

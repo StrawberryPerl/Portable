@@ -1,5 +1,9 @@
 Changes for Perl extension Portable
 
+0.07 Sun 20 Jun 2008
+	- Bug fix to make the CPAN driver test optional
+	  (Avoids breaking CPAN Testers)
+
 0.06 Sat 28 Jun 2008
 	- Satisfactorily completed the Config.pm hook
 	- Satisfactorily completed the File::HomeDir hook
