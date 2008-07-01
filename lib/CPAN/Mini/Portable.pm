@@ -6,7 +6,7 @@ use warnings;
 use base 'CPAN::Mini';
 use Portable ();
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 sub new {
 	my $class = shift;
