@@ -1,5 +1,10 @@
 Changes for Perl extension Portable
 
+0.09 Wed  2 Jul 2008
+	- Fixing my_documents, my_data, etc in Portable::HomeDir.
+	- Implementing my_data also fixes Portable::CPAN.
+	- Adding CPAN::Mini as a dependency for that backend.
+
 0.08 Tue  1 Jul 2008
 	- Adding a dependency on a new version of File::HomeDir
 

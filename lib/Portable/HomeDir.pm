@@ -9,8 +9,7 @@ use Carp                  ();
 use Scalar::Util          ();
 use File::HomeDir::Driver ();
 
-our $VERSION = '0.08';
-our @ISA     = ();
+our $VERSION = '0.09';
 
 
 
@@ -87,6 +86,31 @@ sub _SELF {
 
 sub my_home {
 	_SELF(@_)->{my_home};
+}
+
+# The concept of "my_desktop" is incompatible with the idea of
+# a Portable Perl distribution (because Windows won't overwrite
+# the desktop with anything on the flash drive)
+# sub my_desktop
+
+sub my_documents {
+	_SELF(@_)->{my_documents};
+}
+
+sub my_music {
+	_SELF(@_)->{my_music};
+}
+
+sub my_pictures {
+	_SELF(@_)->{my_pictures};
+}
+
+sub my_videos {
+	_SELF(@_)->{my_videos};
+}
+
+sub my_data {
+	_SELF(@_)->{my_data};
 }
 
 1;

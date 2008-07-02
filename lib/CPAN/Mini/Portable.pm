@@ -3,10 +3,11 @@ package CPAN::Mini::Portable;
 use 5.008;
 use strict;
 use warnings;
-use base 'CPAN::Mini';
-use Portable ();
+use CPAN::Mini ();
+use Portable   ();
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
+our @ISA     = 'CPAN::Mini';
 
 sub new {
 	my $class = shift;
