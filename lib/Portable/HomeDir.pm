@@ -9,7 +9,7 @@ use Carp                  ();
 use Scalar::Util          ();
 use File::HomeDir::Driver ();
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 
 

@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Carp ();
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 
 
@@ -39,6 +39,17 @@ sub new {
 		$self->{$key} = File::Spec->catdir(
 			$root, split /\//, $minicpan->{$key}
 		);
+	}
+
+	# Add the literal params
+	foreach my $key ( qw{
+		remote
+		quiet force offline
+		also_mirror exact_mirror
+		module_filters path_filters
+		skip_cleanup skip_perl
+	} ) {
+		$self->{$key} = $minicpan->{$key};
 	}
 
 	return $self;

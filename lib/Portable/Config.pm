@@ -6,7 +6,7 @@ use warnings;
 use Carp       ();
 use File::Spec ();
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 
 

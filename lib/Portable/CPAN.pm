@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Carp ();
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 # Create the enumerations
 our %bin  = map { $_ => 1 } qw{

@@ -6,16 +6,16 @@ use warnings;
 use Portable   ();
 use CPAN::Mini ();
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 our @ISA     = 'CPAN::Mini';
 
 sub new {
-	# Use the portable values as defaults
-	my $portable = Portable->default->portable;
+	# Use the portable values as defaults,
+	# completely ignoring any passed params
+	my $minicpan = Portable->default->minicpan;
 
 	# Hand off to the parent class
-	my $class = shift;
-	return $class->SUPER::new( %$portable, @_ );
+	return $_[0]->SUPER::new( %$minicpan );
 }
 
 1;
