@@ -4,7 +4,7 @@ package Portable;
 
 =head1 NAME
 
-Portable - Perl on a Stick (EXPERIMENTAL)
+Portable - Perl on a Stick (ALPHA)
 
 =head1 SYNOPSIS
 
