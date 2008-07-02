@@ -60,7 +60,7 @@ use File::Spec        ();
 use List::Util        ();
 use Parse::CPAN::Meta ();
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 # This variable is provided exclusively for the
 # use of test scripts.

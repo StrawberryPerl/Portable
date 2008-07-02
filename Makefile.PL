@@ -7,6 +7,7 @@ requires      'Parse::CPAN::Meta' => '0.03';
 requires      'File::HomeDir'     => '0.80';
 requires      'CPAN::Mini'        => '0.570';
 test_requires 'Test::More'        => '0.42';
+test_requires 'Test::Exception'   => '0.27';
 test_requires 'Class::Inspector'  => '1.20';
 
 WriteAll;
