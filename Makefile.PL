@@ -1,4 +1,4 @@
-use inc::Module::Install 0.75;
+use inc::Module::Install 0.79;
 
 all_from      'lib/Portable.pm';
 requires      'List::Util'        => '1.19';

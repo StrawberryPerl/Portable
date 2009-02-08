@@ -59,11 +59,16 @@ use File::Spec        ();
 use List::Util        ();
 use Parse::CPAN::Meta ();
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 # This variable is provided exclusively for the
 # use of test scripts.
 our $FAKE_PERL;
+
+# Globally-accessible flag to see if Portable is enabled.
+# Defaults to undef, because if Portable.pm is not loaded
+# AT ALL, $Portable::ENABLED returns undef anyways.
+our $ENABLED = undef;
 
 # Param-checking
 sub _STRING ($) {
@@ -99,15 +104,18 @@ sub apply {
 	my %apply   = map { $_ => 1 } @_;
 	if ( $apply{Config} and ! $applied{Config} ) {
 		$self->config->apply($self);
-		$applied{Config} = 1;	
+		$applied{Config}  = 1;
+		$ENABLED          = 1;
 	}
 	if ( $apply{CPAN} and ! $applied{CPAN} and $self->cpan ) {
 		$self->cpan->apply($self);
-		$applied{CPAN} = 1;
+		$applied{CPAN}    = 1;
+		$ENABLED          = 1;
 	}
 	if ( $apply{HomeDir} and ! $applied{HomeDir} and $self->homedir ) {
 		$self->homedir->apply($self);
 		$applied{HomeDir} = 1;
+		$ENABLED          = 1;
 	}
 
 	# We don't need to do anything for CPAN::Mini.
@@ -305,7 +313,7 @@ L<http://win32.perl.org/>
 
 =head1 COPYRIGHT
 
-Copyright 2008 Adam Kennedy.
+Copyright 2008 - 2009 Adam Kennedy.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.

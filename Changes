@@ -1,5 +1,10 @@
 Changes for Perl extension Portable.
 
+0.12 Mon  9 Feb 2009
+	- Upgrading to Module::Install 0.79
+	- Adding a globally-accessible $Portable::ENABLED variable that
+	  external module can use to detect if Portable mode is enabled.
+
 0.11 Wed  2 Jul 2008
 	- Debugged the minicpan backend to the point where it will
 	  actually build and install properly.
