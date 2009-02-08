@@ -6,7 +6,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 37;
+use Test::More tests => 38;
 use File::Spec ();
 
 # Override the perl path for testing purposes
@@ -25,7 +25,9 @@ ok( ! $INC{'CPAN/Config.pm'}, 'CPAN::Config is not loaded' );
 my $perl = Portable->default;
 isa_ok( $perl, 'Portable' );
 
-is( $Portable::ENABLED, 1, '$Portable::ENABLED is true' );
+# Twice to avoid a warning
+is( $Portable::ENABLED, undef, '$Portable::ENABLED is true' );
+is( $Portable::ENABLED, undef, '$Portable::ENABLED is true' );
 
 # Do all the config entries exist
 my $config = $perl->config;
