@@ -1,5 +1,8 @@
 Changes for Perl extension Portable.
 
+0.13 Tue 10 Feb 2009
+	- Adding no_conn_cache support to minicpan
+
 0.12 Mon  9 Feb 2009
 	- Upgrading to Module::Install 0.79
 	- Adding a globally-accessible $Portable::ENABLED variable that

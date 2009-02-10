@@ -49,6 +49,8 @@ or work across multiple operating systems.
 This module is not ready for public use. For now, see the code for
 more details on how it works...
 
+=head1 METHODS
+
 =cut
 
 use 5.008;

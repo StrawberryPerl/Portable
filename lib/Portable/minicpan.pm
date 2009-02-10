@@ -42,15 +42,16 @@ sub new {
 	}
 
 	# Add the literal params
-	foreach my $key ( qw{
-		remote
-		quiet force offline
-		also_mirror exact_mirror
-		module_filters path_filters
-		skip_cleanup skip_perl
-	} ) {
-		$self->{$key} = $minicpan->{$key};
-	}
+	$self->{remote}         = $minicpan->{remote};
+	$self->{quiet}          = $minicpan->{quiet};
+	$self->{force}          = $minicpan->{force};
+	$self->{offline}        = $minicpan->{offline};
+	$self->{also_mirror}    = $minicpan->{also_mirror};
+	$self->{module_filters} = $minicpan->{module_filters};
+	$self->{path_filters}   = $minicpan->{path_filters};
+	$self->{skip_cleanup}   = $minicpan->{skip_cleanup};
+	$self->{skip_perl}      = $minicpan->{skip_perl};
+	$self->{no_conn_cache}  = $minicpan->{no_conn_cache};
 
 	return $self;
 }
