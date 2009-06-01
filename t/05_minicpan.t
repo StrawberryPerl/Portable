@@ -1,12 +1,17 @@
 #!/usr/bin/perl
 
+use 5.008;
 use strict;
+use warnings 'all';
 BEGIN {
 	$|  = 1;
-	$^W = 1;
 }
 
-use Test::More tests => 3;
+# This test requires the internet
+use LWP::Online ':skip_all';
+
+use Test::More tests => 4;
+use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 
 # Override the perl path for testing purposes

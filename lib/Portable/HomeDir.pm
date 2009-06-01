@@ -5,11 +5,12 @@ package Portable::HomeDir;
 use 5.008;
 use strict;
 use warnings;
-use Carp                  ();
-use Scalar::Util          ();
-use File::HomeDir::Driver ();
+use Carp                       ();
+use File::Spec            3.29 ();
+use Scalar::Util          1.21 ();
+use File::HomeDir::Driver 0.86 ();
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 
 

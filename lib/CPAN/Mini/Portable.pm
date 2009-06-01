@@ -3,10 +3,10 @@ package CPAN::Mini::Portable;
 use 5.008;
 use strict;
 use warnings;
-use Portable   ();
-use CPAN::Mini ();
+use Portable         ();
+use CPAN::Mini 0.575 ();
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 our @ISA     = 'CPAN::Mini';
 
 sub new {

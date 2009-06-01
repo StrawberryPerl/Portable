@@ -1,6 +1,8 @@
 Changes for Perl extension Portable.
 
-0.13 Tue 10 Feb 2009
+0.13 to be released
+	- Updating to Module::Install::DSL 0.91
+	- Supports running the test suite while offline
 	- Adding no_conn_cache support to minicpan
 
 0.12 Mon  9 Feb 2009

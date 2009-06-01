@@ -1,12 +1,14 @@
 #!/usr/bin/perl
 
+use 5.008;
 use strict;
+use warnings 'all';
 BEGIN {
 	$|  = 1;
-	$^W = 1;
 }
 
-use Test::More tests => 1;
+use Test::More tests => 2;
+use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use Class::Inspector ();
 

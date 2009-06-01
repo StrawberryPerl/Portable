@@ -19,11 +19,6 @@ Have a script specifically request to run portably
 
 =head1 DESCRIPTION
 
-B<THIS MODULE IS HIGHLY EXPERIMENTAL AND SUBJECT TO CHANGE WITHOUT
-NOTICE.>
-
-B<YOU HAVE BEEN WARNED!>
-
 "Portable" is a term used for applications that are installed onto a
 portable storage device (most commonly a USB memory stick) rather than
 onto a single host.
@@ -56,12 +51,12 @@ more details on how it works...
 use 5.008;
 use strict;
 use warnings;
-use Carp              ();
-use File::Spec        ();
-use List::Util        ();
-use Parse::CPAN::Meta ();
+use Carp                   ();
+use File::Spec        3.29 ();
+use List::Util        1.21 ();
+use Parse::CPAN::Meta 1.39 ();
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 # This variable is provided exclusively for the
 # use of test scripts.

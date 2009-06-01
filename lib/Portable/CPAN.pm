@@ -3,9 +3,10 @@ package Portable::CPAN;
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
+use Carp            ();
+use File::Spec 3.29 ();
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 # Create the enumerations
 our %bin  = map { $_ => 1 } qw{
