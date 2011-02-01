@@ -6,7 +6,7 @@ use warnings;
 use Portable         ();
 use CPAN::Mini 0.575 ();
 
-our $VERSION = '0.13';
+our $VERSION = '1.14';
 our @ISA     = 'CPAN::Mini';
 
 sub new {
