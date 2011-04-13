@@ -1,6 +1,6 @@
 Changes for Perl extension Portable.
 
-1.14 to be released
+1.14 Wed 13 Apr 2011
 	- Updating to Module::Install::DSL 1.00
 	- Switching to a production release
 
