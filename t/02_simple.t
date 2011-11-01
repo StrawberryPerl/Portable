@@ -7,7 +7,7 @@ BEGIN {
 	$|  = 1;
 }
 
-use Test::More tests => 39;
+use Test::More tests => 41;
 use Test::NoWarnings;
 use File::Spec ();
 
@@ -34,10 +34,12 @@ is( $Portable::ENABLED, undef, '$Portable::ENABLED is true' );
 # Do all the config entries exist
 my $config = $perl->config;
 foreach my $k ( sort keys %$config ) {
-	next if $k =~ /^ld/;
+	next if $k =~ /^ld|^libpth$/;
 	next unless defined $config->{$k};
 	next unless length $config->{$k};
 	ok( -e $config->{$k}, "$config->{$k} exists" );
 }
+
+like( $config->{libpth}, qr/^[^ ]*?\\c\\lib [^ ]*?\\c\\i686-w64-mingw32\\lib/, "$config->{libpth} check" );
 
 ok( -e $perl->cpan->{cpan_home}, 'cpan_home exists' );

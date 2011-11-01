@@ -36,10 +36,12 @@ Config:
   installvendorman1dir: ''
   installvendorman3dir: ''
   installvendorscript: ''
-  lddlflags: '-mdll -s -L"$archlib\CORE" -L"$libpth"'
-  ldflags: '-s -L"$archlib\CORE" -L"$libpth"'
-  ldflags_nolargefiles: '-s -L"$archlib\CORE" -L"$libpth"'
-  libpth: c/lib
+  _libpthfix_part1: c/lib
+  _libpthfix_part2: c/i686-w64-mingw32/lib
+  lddlflags: '-mdll -s -L"$archlib\CORE" -L"$_libpthfix_part1"'
+  ldflags: '-s -L"$archlib\CORE" -L"$_libpthfix_part1"'
+  ldflags_nolargefiles: '-s -L"$archlib\CORE" -L"$_libpthfix_part1"'
+  libpth: $_libpthfix_part1 $_libpthfix_part2
   perlpath: perl/bin/perl.exe
   prefix: perl
   prefixexp: perl
@@ -65,7 +67,7 @@ CPAN:
   histfile: cpan/histfile
   keep_source_where: cpan/sources
   make: c/bin/dmake.exe
-  makepl_arg: 'LIBS=-L$libpth INC=-I$incpath'
+  makepl_arg: 'LIBS=-L$_libpthfix_part1 INC=-I$incpath'
   patch: c/bin/patch.exe
   prefs_dir: cpan/prefs
 Env:

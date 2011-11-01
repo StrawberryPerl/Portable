@@ -32,7 +32,7 @@ sub new {
 			and
 			length $conf->{$key}
 			and not
-			$key =~ /^ld/
+			$key =~ /^ld|^libpth$/
 		) {
 			$self->{$key} = $conf->{$key};
 			next;
@@ -42,7 +42,8 @@ sub new {
 			$root, split /\//, $conf->{$key},
 		); #join path to directory of portable perl with value from config file
 	}
-	foreach my $key ( grep { /^ld/ } keys %$self ) { #linker config variables
+	foreach my $key ( grep { /^ld|^libpth$/ } keys %$self ) { 
+		#special handling of linker config variables and libpth
 		next unless defined $self->{$key};
 		$self->{$key} =~ s/\$(\w+)/$self->{$1}/g;
 	}
