@@ -1,7 +1,8 @@
 Changes for Perl extension Portable.
 
-NEXT
-	- fix for https://rt.cpan.org/Public/Bug/Display.html?id=68937 (by kmx)
+1.15 Wed 2 Nov 2011
+	- Updated to Module::Install::DSL 1.04 (ADAMK)
+	- Fixed #68937: $Config{libpth} not correctly transformed (KMX)
 
 1.14 Wed 13 Apr 2011
 	- Updating to Module::Install::DSL 1.00

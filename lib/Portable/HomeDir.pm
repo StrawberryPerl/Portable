@@ -10,7 +10,7 @@ use File::Spec            3.29 ();
 use Scalar::Util          1.21 ();
 use File::HomeDir::Driver 0.86 ();
 
-our $VERSION = '1.14';
+our $VERSION = '1.15';
 
 
 

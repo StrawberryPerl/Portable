@@ -6,7 +6,7 @@ use warnings;
 use Carp            ();
 use File::Spec 3.29 ();
 
-our $VERSION = '1.14';
+our $VERSION = '1.15';
 
 # Create the enumerations
 our %bin  = map { $_ => 1 } qw{

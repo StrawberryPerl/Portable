@@ -56,7 +56,7 @@ use File::Spec        3.29 ();
 use List::Util        1.21 ();
 use Parse::CPAN::Meta 1.39 ();
 
-our $VERSION = '1.14';
+our $VERSION = '1.15';
 
 # This variable is provided exclusively for the
 # use of test scripts.
