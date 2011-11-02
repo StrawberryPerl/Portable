@@ -40,6 +40,6 @@ foreach my $k ( sort keys %$config ) {
 	ok( -e $config->{$k}, "$config->{$k} exists" );
 }
 
-like( $config->{libpth}, qr/^[^ ]*?\\c\\lib [^ ]*?\\c\\i686-w64-mingw32\\lib/, "$config->{libpth} check" );
+like( $config->{libpth}, qr|^[^ ]*?[/\\]c[/\\]lib [^ ]*?[/\\]c[/\\][\w-]+[/\\]lib|, "$config->{libpth} check" );
 
 ok( -e $perl->cpan->{cpan_home}, 'cpan_home exists' );
