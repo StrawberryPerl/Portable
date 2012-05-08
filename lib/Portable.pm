@@ -4,7 +4,7 @@ package Portable;
 
 =head1 NAME
 
-Portable - Perl on a Stick (ALPHA)
+Portable - Perl on a Stick
 
 =head1 SYNOPSIS
 
@@ -53,10 +53,9 @@ use strict;
 use warnings;
 use Carp                   ();
 use File::Spec        3.29 ();
-use List::Util        1.21 ();
 use Parse::CPAN::Meta 1.39 ();
 
-our $VERSION = '1.15';
+our $VERSION = '1.16';
 
 # This variable is provided exclusively for the
 # use of test scripts.
@@ -189,12 +188,13 @@ sub default {
 	my ($dist_volume, $d, $f) = File::Spec->splitpath($perlpath);
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
-	my $dist_dirs = List::Util::first {
+	my @tmp = grep {
 			-f File::Spec->catpath( $dist_volume, $_, 'portable.perl' )
 		}
 		map {
 			File::Spec->catdir(@d[0 .. $_])
 		} reverse ( 0 .. $#d );
+	my $dist_dirs = $tmp[0];
 	unless ( defined $dist_dirs ) {
 		Carp::croak("Failed to find the portable.perl file");
 	}

@@ -1,5 +1,9 @@
 Changes for Perl extension Portable.
 
+1.16 Tue 8 May 2012
+	- Removing dependency on List::Util (KMX)
+	- Removing "ALPHA" from NAME (KMX)
+
 1.15 Wed 2 Nov 2011
 	- Updated to Module::Install::DSL 1.04 (ADAMK)
 	- Fixed #68937: $Config{libpth} not correctly transformed (KMX)
