@@ -6,7 +6,7 @@ use warnings;
 use Carp            ();
 use File::Spec 3.29 ();
 
-our $VERSION = '1.15';
+our $VERSION = '1.17';
 
 
 

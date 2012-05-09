@@ -1,5 +1,8 @@
 Changes for Perl extension Portable.
 
+1.17 Wed 9 May 2012
+	- just versioning fix
+
 1.16 Tue 8 May 2012
 	- Removing dependency on List::Util (KMX)
 	- Removing "ALPHA" from NAME (KMX)
