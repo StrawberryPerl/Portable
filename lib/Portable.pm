@@ -55,7 +55,7 @@ use Carp                   ();
 use File::Spec        3.29 ();
 use Parse::CPAN::Meta 1.39 ();
 
-our $VERSION = '1.17';
+our $VERSION = '1.18';
 
 # This variable is provided exclusively for the
 # use of test scripts.
@@ -187,7 +187,7 @@ sub default {
 	# portable.perl file in the distribution root.
 	my ($dist_volume, $d, $f) = File::Spec->splitpath($perlpath);
 	my @d = File::Spec->splitdir($d);
-	pop @d if $d[-1] eq '';
+	pop @d if @d > 0 && $d[-1] eq '';
 	my @tmp = grep {
 			-f File::Spec->catpath( $dist_volume, $_, 'portable.perl' )
 		}

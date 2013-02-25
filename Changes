@@ -1,5 +1,8 @@
 Changes for Perl extension Portable.
 
+1.18 Mon 25 Feb 2013
+	- eliminating warning
+
 1.17 Wed 9 May 2012
 	- just versioning fix
 
