@@ -4,9 +4,9 @@ use 5.008;
 use strict;
 use warnings;
 use Carp            ();
-use File::Spec 3.29 ();
+use Portable::FileSpec;
 
-our $VERSION = '1.17';
+our $VERSION = '1.19';
 
 # Create the enumerations
 our %bin  = map { $_ => 1 } qw{
@@ -51,10 +51,12 @@ sub new {
 			$self->{$key} = $cpan->{$key};
 			next;
 		}
-		my $method = $file{$key} ? 'catfile' : 'catdir';
-		$self->{$key} = File::Spec->$method(
-			$root, split /\//, $cpan->{$key}
-		);
+                if ($file{$key}) {
+                  $self->{$key} = Portable::FileSpec::catfile($root, split /\//, $cpan->{$key});
+                }
+                else {
+                  $self->{$key} = Portable::FileSpec::catdir($root, split /\//, $cpan->{$key});
+                }
 	}
 	my $config = $parent->config;
 	foreach my $key ( sort keys %post ) {

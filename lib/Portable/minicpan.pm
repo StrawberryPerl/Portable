@@ -4,13 +4,9 @@ use 5.008;
 use strict;
 use warnings;
 use Carp            ();
-use File::Spec 3.29 ();
+use Portable::FileSpec;
 
-our $VERSION = '1.17';
-
-
-
-
+our $VERSION = '1.19';
 
 #####################################################################
 # Portable Driver API
@@ -37,7 +33,7 @@ sub new {
 			$self->{$key} = $minicpan->{$key};
 			next;
 		}
-		$self->{$key} = File::Spec->catdir(
+		$self->{$key} = Portable::FileSpec::catdir(
 			$root, split /\//, $minicpan->{$key}
 		);
 	}

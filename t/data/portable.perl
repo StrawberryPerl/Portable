@@ -19,23 +19,24 @@ Config:
   installprivlib: perl/lib
   installscript: perl/bin
   installsitearch: perl/site/lib
-  installsitebin: perl/bin
+  installsitebin: perl/site/bin
   installsitehtml1dir: ''
   installsitehtml3dir: ''
   installsitelib: perl/site/lib
   installsiteman1dir: ''
   installsiteman3dir: ''
-  installsitescript: ''
+  installsitescript: 'perl/site/bin'
   installstyle: perl/lib
   installusrbinperl: ~
-  installvendorarch: ''
-  installvendorbin: ''
+  installvendorarch: 'perl/vendor/lib'
+  installvendorbin: 'perl/bin'
   installvendorhtml1dir: ''
   installvendorhtml3dir: ''
-  installvendorlib: ''
+  installvendorlib: 'perl/vendor/lib'
   installvendorman1dir: ''
   installvendorman3dir: ''
-  installvendorscript: ''
+  installvendorscript: 'perl/bin'
+  ld: g++.exe
   _libpthfix_part1: c/lib
   _libpthfix_part2: c/i686-w64-mingw32/lib
   lddlflags: '-mdll -s -L"$archlib\CORE" -L"$_libpthfix_part1"'
@@ -51,8 +52,8 @@ Config:
   scriptdirexp: perl/bin
   sitearch: perl/site/lib
   sitearchexp: perl/site/lib
-  sitebin: perl/bin
-  sitebinexp: perl/bin
+  sitebin: perl/site/bin
+  sitebinexp: perl/site/bin
   sitelib: perl/site/lib
   sitelibexp: perl/site/lib
   siteprefix: perl/site
@@ -61,6 +62,23 @@ Config:
   man1direxp: ''
   man3dir: ''
   man3direxp: ''
+  vendorarch: perl/vendor/lib
+  vendorarchexp: perl/vendor/lib
+  vendorbin: perl/bin
+  vendorbinexp: perl/bin
+  vendorhtml1dir: ''
+  vendorhtml3dir: ''
+  vendorlib: perl/vendor/lib
+  vendorlibexp: perl/vendor/lib
+  vendorman1dir: ''
+  vendorman3dir: ''
+  vendorprefix: perl/vendor
+  vendorprefixexp: perl/vendor
+  vendorscript: perl/bin
+  sitescript: perl/site/bin
+  sitescriptexp: perl/site/bin
+  vendorscriptexp: perl/bin
+  usrinc: c/include
 CPAN:
   build_dir: cpan/build
   cpan_home: cpan

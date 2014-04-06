@@ -24,6 +24,7 @@ eval {
 	require Portable;
 	Portable->import('Config');
 };
+warn "XXXXX: $@" if $@;
 ok( ! $@, "->import(Config) ok" );
 
 # CPAN::Config should not be loaded

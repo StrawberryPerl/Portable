@@ -6,15 +6,11 @@ use 5.008;
 use strict;
 use warnings;
 use Carp                       ();
-use File::Spec            3.29 ();
 use Scalar::Util          1.21 ();
 use File::HomeDir::Driver 0.86 ();
+use Portable::FileSpec;
 
-our $VERSION = '1.17';
-
-
-
-
+our $VERSION = '1.19';
 
 #####################################################################
 # Portable Driver API
@@ -41,7 +37,7 @@ sub new {
 			$self->{$key} = $homedir->{$key};
 			next;
 		}
-		$self->{$key} = File::Spec->catdir(
+		$self->{$key} = Portable::FileSpec::catdir(
 			$root, split /\//, $homedir->{$key}
 		);
 	}

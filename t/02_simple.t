@@ -7,7 +7,7 @@ BEGIN {
 	$|  = 1;
 }
 
-use Test::More tests => 41;
+use Test::More tests => 59;
 use Test::NoWarnings;
 use File::Spec ();
 
@@ -37,7 +37,7 @@ foreach my $k ( sort keys %$config ) {
 	next if $k =~ /^ld|^libpth$/;
 	next unless defined $config->{$k};
 	next unless length $config->{$k};
-	ok( -e $config->{$k}, "$config->{$k} exists" );
+	ok( -e $config->{$k}, "$k: $config->{$k} exists" );
 }
 
 like( $config->{libpth}, qr|^[^ ]*?[/\\]c[/\\]lib [^ ]*?[/\\]c[/\\][\w-]+[/\\]lib|, "$config->{libpth} check" );

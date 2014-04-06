@@ -1,5 +1,9 @@
 Changes for Perl extension Portable.
 
+1.19 Sun 6 Apr 2014
+	- fixing troubles/collisions/interferences with File::Spec in 5.19.10
+	- introducing Portable::FileSpec which is Win32 ONLY!!!! (I know it is not good)
+
 1.18 Mon 25 Feb 2013
 	- eliminating warning
 
