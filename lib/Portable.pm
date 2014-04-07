@@ -55,7 +55,7 @@ use Carp                   ();
 use Parse::CPAN::Meta 1.39 ();
 use Portable::FileSpec;
 
-our $VERSION = '1.19';
+our $VERSION = '1.20';
 
 # This variable is provided exclusively for the
 # use of test scripts.

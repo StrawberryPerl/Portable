@@ -10,7 +10,7 @@ use Scalar::Util          1.21 ();
 use File::HomeDir::Driver 0.86 ();
 use Portable::FileSpec;
 
-our $VERSION = '1.19';
+our $VERSION = '1.20';
 
 #####################################################################
 # Portable Driver API
