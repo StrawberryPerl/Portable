@@ -51,11 +51,10 @@ more details on how it works...
 use 5.008;
 use strict;
 use warnings;
-use Carp                   ();
 use Parse::CPAN::Meta 1.39 ();
 use Portable::FileSpec;
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 # This variable is provided exclusively for the
 # use of test scripts.
@@ -137,16 +136,16 @@ sub new {
 
 	# Param checking
 	unless ( exists $self->{dist_volume} ) {
-		Carp::croak('Missing or invalid dist_volume param');
+		die('Missing or invalid dist_volume param');
 	}
 	unless ( _STRING($self->dist_dirs) ) {
-		Carp::croak('Missing or invalid dist_dirs param');
+		die('Missing or invalid dist_dirs param');
 	}
 	unless ( _STRING($self->dist_root) ) {
-		Carp::croak('Missing or invalid dist_root param');
+		die('Missing or invalid dist_root param');
 	}
 	unless ( _HASH($self->{portable}) ) {
-		Carp::croak('Missing or invalid portable param');
+		die('Missing or invalid portable param');
 	}
 
 	# Compulsory support for Config.pm
@@ -196,7 +195,7 @@ sub default {
 		} reverse ( 0 .. $#d );
 	my $dist_dirs = $tmp[0];
 	unless ( defined $dist_dirs ) {
-		Carp::croak("Failed to find the portable.perl file");
+		die("Failed to find the portable.perl file");
 	}
 
 	# Derive the main paths from the plain dirs
@@ -206,7 +205,7 @@ sub default {
 	# Load the YAML file
 	my $portable = Parse::CPAN::Meta::LoadFile( $conf );
 	unless ( _HASH($portable) ) {
-		Carp::croak("Missing or invalid portable.perl file");
+		die("Missing or invalid portable.perl file");
 	}
 
 	# Hand off to the main constructor,

@@ -3,10 +3,9 @@ package Portable::CPAN;
 use 5.008;
 use strict;
 use warnings;
-use Carp            ();
 use Portable::FileSpec;
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 # Create the enumerations
 our %bin  = map { $_ => 1 } qw{
@@ -31,7 +30,7 @@ sub new {
 	my $class  = shift;
 	my $parent = shift;
 	unless ( Portable::_HASH($parent->portable_cpan) ) {
-		Carp::croak('Missing or invalid cpan key in portable.perl');
+		die('Missing or invalid cpan key in portable.perl');
 	}
 
 	# Create the object

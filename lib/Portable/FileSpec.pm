@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 # Some regexes we use for path splitting
 my $DRIVE_RX = '[a-zA-Z]:';

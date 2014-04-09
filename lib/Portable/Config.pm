@@ -3,10 +3,9 @@ package Portable::Config;
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
 use Portable::FileSpec;
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 #####################################################################
 # Constructor
@@ -15,7 +14,7 @@ sub new {
 	my $class  = shift;
 	my $parent = shift;
 	unless ( Portable::_HASH($parent->portable_config) ) {
-		Carp::croak('Missing or invalid config key in portable.perl');
+		die('Missing or invalid config key in portable.perl');
 	}
 
 	# Create the object

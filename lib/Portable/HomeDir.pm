@@ -5,12 +5,9 @@ package Portable::HomeDir;
 use 5.008;
 use strict;
 use warnings;
-use Carp                       ();
-use Scalar::Util          1.21 ();
-use File::HomeDir::Driver 0.86 ();
 use Portable::FileSpec;
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 #####################################################################
 # Portable Driver API
@@ -19,7 +16,7 @@ sub new {
 	my $class  = shift;
 	my $parent = shift;
 	unless ( Portable::_HASH($parent->portable_homedir) ) {
-		Carp::croak('Missing or invalid HomeDir key in portable.perl');
+		die('Missing or invalid HomeDir key in portable.perl');
 	}
 
 	# Create the object
