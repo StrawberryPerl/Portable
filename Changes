@@ -1,5 +1,8 @@
 Changes for Perl extension Portable.
 
+1.22 Wed 9 Apr 2014
+	- avoiding Parse::CPAN::Meta (collisions with cpanminus) - another UGLY HACK!!!
+
 1.21 Wed 9 Apr 2014
 	- avoiding Carp (due to Carp reload failures)
 

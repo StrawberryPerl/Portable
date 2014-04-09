@@ -51,10 +51,10 @@ more details on how it works...
 use 5.008;
 use strict;
 use warnings;
-use Parse::CPAN::Meta 1.39 ();
+use Portable::LoadYaml;
 use Portable::FileSpec;
 
-our $VERSION = '1.21';
+our $VERSION = '1.22';
 
 # This variable is provided exclusively for the
 # use of test scripts.
@@ -203,7 +203,7 @@ sub default {
 	my $conf      = Portable::FileSpec::catpath($dist_volume, $dist_dirs, 'portable.perl' );
 
 	# Load the YAML file
-	my $portable = Parse::CPAN::Meta::LoadFile( $conf );
+	my $portable = Portable::LoadYaml::load_file( $conf );
 	unless ( _HASH($portable) ) {
 		die("Missing or invalid portable.perl file");
 	}

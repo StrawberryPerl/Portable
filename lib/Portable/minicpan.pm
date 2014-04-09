@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Portable::FileSpec;
 
-our $VERSION = '1.21';
+our $VERSION = '1.22';
 
 #####################################################################
 # Portable Driver API
