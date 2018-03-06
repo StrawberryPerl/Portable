@@ -1,4 +1,4 @@
-use inc::Module::Install::DSL 1.04;
+use inc::Module::Install::DSL 1.19;
 
 all_from      lib/Portable.pm
 requires_from lib/Portable.pm
