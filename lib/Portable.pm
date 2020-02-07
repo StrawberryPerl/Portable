@@ -54,7 +54,7 @@ use warnings;
 use Portable::LoadYaml;
 use Portable::FileSpec;
 
-our $VERSION = '1.22';
+our $VERSION = '1.23';
 
 # This variable is provided exclusively for the
 # use of test scripts.
@@ -291,21 +291,9 @@ sub env {
 
 =pod
 
-=head1 SUPPORT
-
-Bugs should be reported via the CPAN bug tracker.
-
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Portable>
-
-For other issues, or commercial support, contact the author.
-
 =head1 AUTHOR
 
 Adam Kennedy E<lt>adamk@cpan.orgE<gt>
-
-=head1 SEE ALSO
-
-L<http://win32.perl.org/>
 
 =head1 COPYRIGHT
 

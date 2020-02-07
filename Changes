@@ -1,94 +1,97 @@
 Changes for Perl extension Portable.
 
-1.22 Wed 9 Apr 2014
-	- avoiding Parse::CPAN::Meta (collisions with cpanminus) - another UGLY HACK!!!
+1.23    2020-NEXT
+        - switch to EUMM
 
-1.21 Wed 9 Apr 2014
-	- avoiding Carp (due to Carp reload failures)
+1.22    2014-04-09
+        - avoiding Parse::CPAN::Meta (collisions with cpanminus) - another UGLY HACK!!!
 
-1.20 Mon 7 Apr 2014
-	- missing test files
+1.21    2014-04-09
+        - avoiding Carp (due to Carp reload failures)
 
-1.19 Sun 6 Apr 2014
-	- fixing troubles/collisions/interferences with File::Spec in 5.19.10
-	- introducing Portable::FileSpec which is Win32 ONLY!!!! (I know it is not good)
+1.20    2014-04-07
+        - missing test files
 
-1.18 Mon 25 Feb 2013
-	- eliminating warning
+1.19    2014-04-06
+        - fixing troubles/collisions/interferences with File::Spec in 5.19.10
+        - introducing Portable::FileSpec which is Win32 ONLY!!!! (I know it is not good)
 
-1.17 Wed 9 May 2012
-	- just versioning fix
+1.18    2013-02-25
+        - eliminating warning
 
-1.16 Tue 8 May 2012
-	- Removing dependency on List::Util (KMX)
-	- Removing "ALPHA" from NAME (KMX)
+1.17    2012-05-09
+        - just versioning fix
 
-1.15 Wed 2 Nov 2011
-	- Updated to Module::Install::DSL 1.04 (ADAMK)
-	- Fixed #68937: $Config{libpth} not correctly transformed (KMX)
+1.16    2012-05-08
+        - Removing dependency on List::Util (KMX)
+        - Removing "ALPHA" from NAME (KMX)
 
-1.14 Wed 13 Apr 2011
-	- Updating to Module::Install::DSL 1.00
-	- Switching to a production release
+1.15    2011-11-02
+        - Updated to Module::Install::DSL 1.04 (ADAMK)
+        - Fixed #68937: $Config{libpth} not correctly transformed (KMX)
 
-0.13 Mon 1 Jun 2009
-	- Updating to Module::Install::DSL 0.91
-	- Supports running the test suite while offline
-	- Adding no_conn_cache support to minicpan
+1.14    2011-04-13
+        - Updating to Module::Install::DSL 1.00
+        - Switching to a production release
 
-0.12 Mon  9 Feb 2009
-	- Upgrading to Module::Install 0.79
-	- Adding a globally-accessible $Portable::ENABLED variable that
-	  external module can use to detect if Portable mode is enabled.
+0.13    2009-06-01
+        - Updating to Module::Install::DSL 0.91
+        - Supports running the test suite while offline
+        - Adding no_conn_cache support to minicpan
 
-0.11 Wed  2 Jul 2008
-	- Debugged the minicpan backend to the point where it will
-	  actually build and install properly.
+0.12    2009-02-09
+        - Upgrading to Module::Install 0.79
+        - Adding a globally-accessible $Portable::ENABLED variable that
+          external module can use to detect if Portable mode is enabled.
 
-0.10 Wed  2 Jul 2008
-	- Working on a proper implementation of the minicpan backend.
-	- Added missing test_requires Test::Exception.
+0.11    2008-07-02
+        - Debugged the minicpan backend to the point where it will
+          actually build and install properly.
 
-0.09 Wed  2 Jul 2008
-	- Fixing my_documents, my_data, etc in Portable::HomeDir.
-	- Implementing my_data also fixes Portable::CPAN.
-	- Adding CPAN::Mini as a dependency for that backend.
+0.10    2008-07-02
+        - Working on a proper implementation of the minicpan backend.
+        - Added missing test_requires Test::Exception.
 
-0.08 Tue  1 Jul 2008
-	- Adding a dependency on a new version of File::HomeDir.
+0.09    2008-07-02
+        - Fixing my_documents, my_data, etc in Portable::HomeDir.
+        - Implementing my_data also fixes Portable::CPAN.
+        - Adding CPAN::Mini as a dependency for that backend.
 
-0.07 Sun 20 Jun 2008
-	- Bug fix to make the CPAN driver test optional.
-	  (Avoids breaking CPAN Testers)
+0.08    2008-07-01
+        - Adding a dependency on a new version of File::HomeDir.
 
-0.06 Sat 28 Jun 2008
-	- Satisfactorily completed the Config.pm hook.
-	- Satisfactorily completed the File::HomeDir hook.
-	- Some test tweaks to make them actually work.
+0.07    2008-06-20
+        - Bug fix to make the CPAN driver test optional.
+          (Avoids breaking CPAN Testers)
 
-0.05 Sun 27 Apr 2008
-	- Don't preload the configurations.
-	  (Delay until the final ->apply is called)
-	- Import now takes backend names as params.
-	  (Allows appending "use Portable 'Config';" to Config.pm etc)
-	- Adding tests for the new interfaces.
-	- Disable warnings when playing around with Config::STORE.
-	- Completing the implementation of Portable::CPAN.
-	- A variety of functionality bug fixes.
+0.06    2008-06-28
+        - Satisfactorily completed the Config.pm hook.
+        - Satisfactorily completed the File::HomeDir hook.
+        - Some test tweaks to make them actually work.
 
-0.04 Wed 23 Apr 2008
-	- Separating out each task into a separate class.
-	- Making the overwriting of CPAN::Config optional, 
-	  because (at least theoretically) it doesn't always exist.
+0.05    2008-04-27
+        - Don't preload the configurations.
+          (Delay until the final ->apply is called)
+        - Import now takes backend names as params.
+          (Allows appending "use Portable 'Config';" to Config.pm etc)
+        - Adding tests for the new interfaces.
+        - Disable warnings when playing around with Config::STORE.
+        - Completing the implementation of Portable::CPAN.
+        - A variety of functionality bug fixes.
 
-0.03 Tue 22 Apr 2008
-	- Moving the name from Perl::Portable to Portable.
-	- Adding proper support for Portable'ing CPAN::Config.
-	- Removing dependency bloat, use only 5.10.1 core modules.
+0.04    2008-04-23
+        - Separating out each task into a separate class.
+        - Making the overwriting of CPAN::Config optional, 
+          because (at least theoretically) it doesn't always exist.
 
-0.02 Mon 21 Apr 2008
-	- Completely changed the portable.perl format to be based on
-	  Config.pm instead of some arbitrary format I invented myself.
+0.03    2008-04-22
+        - Moving the name from Perl::Portable to Portable.
+        - Adding proper support for Portable'ing CPAN::Config.
+        - Removing dependency bloat, use only 5.10.1 core modules.
 
-0.01 Fri 18 Apr 2008
-	- Experimental first release.
+0.02    2008-04-21
+        - Completely changed the portable.perl format to be based on
+          Config.pm instead of some arbitrary format I invented myself.
+
+0.01    2008-04-18
+        - Experimental first release.
